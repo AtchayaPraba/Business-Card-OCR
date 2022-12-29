@@ -137,3 +137,43 @@ or
 ```
 pip install en_core_web_md-3.4.1.tar.gz.whl
 ```
+
+### Step 08: DATA EXTRACTION AND LABELING
+1. Data extraction from image - pytesseract.ipynb
+2. Data is saved as allBusinessCard.csv 
+3. IOB / BIO method is used for labeling extracted data manually
+    - B ---> Beginning of a chunk
+    - I --> Inside a chunk
+    - o --> Outside (does not belong to any chunk)
+4. Entities are:
+| Description | Tag | 
+| :- | :- | 
+| Name | NAME | 
+| Designation | DES |
+| Organization | ORG |
+| Phone Number | PHONE |
+| Email Address | EMAIL |
+| Website | WEB |
+5. The tagged entities is saved as businessCard.csv
+
+### Step 09: DATA PREPROCESSING
+1. businessCard.csv as tab delimited file for spacy to process
+2. Train test split with random shuffle and save as .picckle format
+2. Data preprocessing and cleaning.ipynb
+
+### Step 10: TRAIN NER MODEL USING spaCY
+1. Recomended spaCy version > 3.1
+2. spaCy has a set of pre defined models. For taining model go to [OFFICIAL_SITE](https://spacy.io/usage/training) and download the base_config.cfg by filling the requirements.
+3. Run base_config.cfg in Terminal to create config.cfg
+```
+python -m spacy init fill-config ./base_config.cfg ./config.cfg
+```
+4. To train the model train and test data has to be in .spacy form. Using code form [LINK](https://spacy.io/usage/training#training-data) create preprocess.py file
+5. Run preprocess.py in Terminal to create train.spacy and test.spacy
+6. Train the NER model using
+```
+python -m spacy train <config.cgf> --output <output_dir> --paths.tranin <train.spacy> --paths.dev <test.spacy>
+```
+7. best_model and last_model are created
+
+
